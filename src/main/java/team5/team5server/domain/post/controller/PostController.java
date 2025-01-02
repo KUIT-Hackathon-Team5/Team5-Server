@@ -53,7 +53,6 @@ public class PostController {
     public BaseResponse<PostInfoResponse> viewInfo(
             @PathVariable Long postId
     ) {
-
         return null;
     }
 
