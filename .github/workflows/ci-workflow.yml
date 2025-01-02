@@ -47,3 +47,14 @@ jobs:
 
       - name: 🐘 build with Gradle (with test)
         run: ./gradlew clean build --stacktrace
+
+      - name: Debug environment variables
+        run: |
+          echo "DB_HOST: $DB_HOST"
+          echo "DB_USER: $DB_USER"
+          echo "DB_PASSWORD: $DB_PASSWORD"
+        env:
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_USER: ${{ vars.DB_USER }}
+          DB_PASSWORD: ${{ vars.DB_PASSWORD }}
+
