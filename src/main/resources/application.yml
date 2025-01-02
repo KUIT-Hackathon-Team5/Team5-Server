@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: local
+    active: dev
 
   mail:
     host: smtp.gmail.com
