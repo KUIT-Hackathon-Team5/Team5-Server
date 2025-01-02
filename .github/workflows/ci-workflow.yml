@@ -34,25 +34,11 @@ jobs:
           server-id: github
           setting-path: ${{ github.workspace }}
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: 👏🏻 grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: 🐘 build with Gradle (with test)
         run: ./gradlew clean build --stacktrace
-
-      - name: Debug environment variables
-        run: |
-          echo "DB_HOST: $DB_HOST"
-          echo "DB_USER: $DB_USER"
-          echo "DB_PASSWORD: $DB_PASSWORD"
         env:
           DB_HOST: ${{ vars.DB_HOST }}
           DB_USER: ${{ vars.DB_USER }}
