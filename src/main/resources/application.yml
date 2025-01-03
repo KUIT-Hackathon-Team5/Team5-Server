@@ -46,6 +46,15 @@ spring:
       host: localhost
       port: 6379
 
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+jwt:
+  secret: hackathonteam5kuzonehackathonteam5kuzonehackathonteam5kuzone
+  expiration: 10800000
+
 ---
 spring:
   config:
