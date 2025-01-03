@@ -51,10 +51,10 @@ server:
   servlet:
     context-path: /
 
-#logging:
-#  level:
-#    root: DEBUG
-#    org.springframework.mail: DEBUG
+logging:
+  level:
+    root: DEBUG
+    org.springframework.mail: DEBUG
 
 jwt:
   secret: hackathonteam5kuzonehackathonteam5kuzonehackathonteam5kuzone
