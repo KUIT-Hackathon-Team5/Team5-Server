@@ -8,10 +8,10 @@ import team5.team5server.domain.comment.domain.Comment;
 @NoArgsConstructor
 public class CommentSaveResponse {
 
-    private Long commendId;
+    private Long commentId;
 
-    public CommentSaveResponse(Long commendId) {
-        this.commendId = commendId;
+    public CommentSaveResponse(Long commentId) {
+        this.commentId = commentId;
     }
 
     public static CommentSaveResponse of(Comment comment) {

@@ -96,7 +96,8 @@ public class UserService {
     public UserSaveResponse saveUser(@Valid final UserSaveRequest userSaveRequest) {
         this.checkDuplicatedEmail(userSaveRequest.getEmail());
 
-        checkDuplicateName(userSaveRequest);
+        this.checkDuplicateName(userSaveRequest);
+
 
         User user = User.builder()
                 .email(userSaveRequest.getEmail())

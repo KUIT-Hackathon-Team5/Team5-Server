@@ -27,15 +27,17 @@ public class User extends BaseEntity {
     private String password;
 
     @Builder
-    private User(String email, String password) {
+    private User(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
-    public static User of(String email, String password) {
+    public static User of(String email, String password, String name) {
         return User.builder()
                 .email(email)
                 .password(password)
+                .name(name)
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import team5.team5server.domain.comment.dto.request.CommentEditRequest;
 import team5.team5server.domain.comment.dto.request.CommentSaveRequest;
 import team5.team5server.domain.comment.dto.response.*;
+import team5.team5server.domain.comment.service.CommentService;
 import team5.team5server.global.response.BaseResponse;
 
 @Slf4j
@@ -14,14 +15,16 @@ import team5.team5server.global.response.BaseResponse;
 @RequiredArgsConstructor
 public class CommentController {
 
+    private final CommentService commentService;
+
     @PostMapping
     public BaseResponse<CommentSaveResponse> comment(@RequestBody final CommentSaveRequest commentSaveRequest) {
-        return null;
+        return BaseResponse.ok(commentService.uploadComment(commentSaveRequest));
     }
 
     @GetMapping
     public BaseResponse<CommentListResponse> view(@RequestParam("postId") final Long postId) {
-        return null;
+        return BaseResponse.ok(commentService.viewComment(postId));
     }
 
     @PatchMapping("{commentId}")

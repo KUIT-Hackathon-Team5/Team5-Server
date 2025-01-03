@@ -58,7 +58,7 @@ logging:
 
 jwt:
   secret: hackathonteam5kuzonehackathonteam5kuzonehackathonteam5kuzone
-  expiration: 10800000
+  expiration: 108000000
 
 ---
 spring:

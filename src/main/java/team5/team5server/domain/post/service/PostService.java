@@ -73,10 +73,13 @@ public class PostService {
             throw new CustomException(ErrorCode.NO_SUCH_ORDER);
         }
 
-        List<Post> findPostCategory = postRepository.findByPostCategory(postCategory, Sort.by(Sort.Direction.ASC, sortMethod));
+        List<Post> findPosts = postRepository.findByPostCategory(postCategory, Sort.by(Sort.Direction.ASC, sortMethod));
+        if (findPosts.isEmpty()) {
+            throw new CustomException(ErrorCode.NO_SUCH_POST);
+        }
         List<PostInfo> posts = new ArrayList<>();
 
-        for (Post post : findPostCategory) {
+        for (Post post : findPosts) {
             PostInfo postInfo = PostInfo.builder()
                     .postId(post.getId())
                     .userId(post.getUser().getId())

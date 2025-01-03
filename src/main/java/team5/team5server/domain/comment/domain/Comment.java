@@ -1,6 +1,7 @@
 package team5.team5server.domain.comment.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team5.team5server.domain.post.domain.Post;
@@ -38,4 +39,14 @@ public class Comment extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private EntityStatus entityStatus;
+
+    @Builder
+    public Comment(User user, Post post, String contents) {
+        this.user = user;
+        this.post = post;
+        this.contents = contents;
+        this.likeCount = 0;
+        this.reportCount = 0;
+        this.entityStatus = EntityStatus.ACTIVE;
+    }
 }
