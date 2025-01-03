@@ -66,6 +66,7 @@ public class CommentService {
                     .commentId(comment.getId())
                     .postId(comment.getPost().getId())
                     .userId(comment.getUser().getId())
+                    .userName(comment.getUser().getName())
                     .contents(comment.getContents())
                     .createdDate(comment.getCreatedAt())
                     .reportCount(comment.getReportCount())

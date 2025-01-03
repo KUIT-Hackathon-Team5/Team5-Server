@@ -95,13 +95,12 @@ public class UserService {
     @Transactional
     public UserSaveResponse saveUser(@Valid final UserSaveRequest userSaveRequest) {
         this.checkDuplicatedEmail(userSaveRequest.getEmail());
-
         this.checkDuplicateName(userSaveRequest);
-
 
         User user = User.builder()
                 .email(userSaveRequest.getEmail())
                 .password(userSaveRequest.getPassword())
+                .name(userSaveRequest.getName())
                 .build();
 
         userRepository.save(user);

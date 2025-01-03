@@ -16,6 +16,8 @@ public class CommentInfo {
 
     private Long userId;
 
+    private String userName;
+
     private String contents;
 
     private LocalDateTime createdDate;
@@ -23,10 +25,11 @@ public class CommentInfo {
     private int reportCount;
 
     @Builder
-    public CommentInfo(Long commentId, Long postId, Long userId, String contents, LocalDateTime createdDate, int reportCount) {
+    public CommentInfo(Long commentId, Long postId, Long userId, String userName, String contents, LocalDateTime createdDate, int reportCount) {
         this.commentId = commentId;
         this.postId = postId;
         this.userId = userId;
+        this.userName = userName;
         this.contents = contents;
         this.createdDate = createdDate;
         this.reportCount = reportCount;
