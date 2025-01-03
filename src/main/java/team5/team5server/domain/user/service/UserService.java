@@ -49,10 +49,17 @@ public class UserService {
 
         final String title = "KU:zone 이메일 인증 번호";
         String authCode = this.createCode();
+        log.debug("Auth Code: {}", authCode);
         mailService.sendEmail(toEmail, title, authCode);
+        log.debug("Sending Email to {}", toEmail);
         // 이메일 인증 요청 시 인증 번호 Redis에 저장 ( key = "AuthCode " + Email / value = AuthCode )
+
+        log.debug("Redis 저장 시작");
+
         redisService.setValues(AUTH_CODE_PREFIX + toEmail,
                 authCode, Duration.ofMillis(this.authCodeExpirationMillis));
+
+        log.debug("Redis 저장 완료");
     }
 
     private void checkDuplicatedEmail(String email) {
