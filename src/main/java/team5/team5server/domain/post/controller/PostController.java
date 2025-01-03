@@ -3,11 +3,14 @@ package team5.team5server.domain.post.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import team5.team5server.domain.post.dto.request.PostEditRequest;
 import team5.team5server.domain.post.dto.request.PostSaveRequest;
 import team5.team5server.domain.post.dto.response.*;
 import team5.team5server.domain.post.service.PostService;
 import team5.team5server.global.response.BaseResponse;
+
+import java.util.List;
 
 @Slf4j
 @RestController

@@ -11,7 +11,7 @@ import team5.team5server.domain.user.domain.repository.UserRepository;
 import team5.team5server.domain.user.dto.request.EmailSendRequest;
 import team5.team5server.domain.user.dto.request.UserLoginRequest;
 import team5.team5server.domain.user.dto.request.UserSaveRequest;
-import team5.team5server.domain.user.dto.response.EmailVerificationResponse;
+import team5.team5server.domain.user.dto.response.VerificationResponse;
 import team5.team5server.domain.user.dto.response.UserLoginResponse;
 import team5.team5server.domain.user.dto.response.UserSaveResponse;
 import team5.team5server.global.config.RedisService;
@@ -21,7 +21,6 @@ import team5.team5server.global.response.exception.ErrorCode;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.Duration;
-import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -84,18 +83,18 @@ public class UserService {
         }
     }
 
-    public EmailVerificationResponse verifiedCode(String email, String authCode) {
+    public VerificationResponse verifiedCode(String email, String authCode) {
         this.checkDuplicatedEmail(email);
         String redisAuthCode = redisService.getValues(AUTH_CODE_PREFIX + email);
         boolean authResult = redisService.checkExistsValue(redisAuthCode) && redisAuthCode.equals(authCode);
 
-        return EmailVerificationResponse.of(authResult);
+        return VerificationResponse.of(authResult);
     }
 
     @Transactional
     public UserSaveResponse saveUser(@Valid final UserSaveRequest userSaveRequest) {
         this.checkDuplicatedEmail(userSaveRequest.getEmail());
-        this.checkDuplicateName(userSaveRequest);
+        this.checkDuplicateName(userSaveRequest.getName());
 
         User user = User.builder()
                 .email(userSaveRequest.getEmail())
@@ -107,9 +106,9 @@ public class UserService {
         return UserSaveResponse.of(user);
     }
 
-    private void checkDuplicateName(UserSaveRequest userSaveRequest) {
-        if (userRepository.existsByName(userSaveRequest.getName())) {
-            log.debug("MemberServiceImpl.checkDuplicateName exception occur name: {}", userSaveRequest.getName());
+    private void checkDuplicateName(String name) {
+        if (userRepository.existsByName(name)) {
+            log.debug("MemberServiceImpl.checkDuplicateName exception occur name: {}", name);
             throw new CustomException(ErrorCode.DUPLICATE_NAME);
         }
     }
@@ -129,5 +128,10 @@ public class UserService {
         log.debug("generating access token: {}", token);
 
         return UserLoginResponse.of(token, user.getId());
+    }
+
+    public VerificationResponse checkName(@Valid UserSaveRequest userSaveRequest) {
+        this.checkDuplicateName(userSaveRequest.getName());
+        return VerificationResponse.of(true);
     }
 }

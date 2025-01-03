@@ -10,7 +10,7 @@ import team5.team5server.domain.user.dto.request.UserSaveRequest;
 import team5.team5server.domain.user.dto.response.UserLoginResponse;
 import team5.team5server.domain.user.dto.response.UserSaveResponse;
 import team5.team5server.domain.user.service.UserService;
-import team5.team5server.domain.user.dto.response.EmailVerificationResponse;
+import team5.team5server.domain.user.dto.response.VerificationResponse;
 import team5.team5server.global.response.BaseResponse;
 
 @Slf4j
@@ -39,8 +39,8 @@ public class UserController {
      * @return
      */
     @GetMapping("/emails/verifications")
-    public BaseResponse<EmailVerificationResponse> verificationEmail(@RequestParam("email") final String email,
-                                          @RequestParam("code") String authCode) {
+    public BaseResponse<VerificationResponse> verificationEmail(@RequestParam("email") final String email,
+                                                                @RequestParam("code") String authCode) {
 
         return BaseResponse.ok(userService.verifiedCode(email, authCode));
 
@@ -54,6 +54,11 @@ public class UserController {
     @PostMapping("/register")
     public BaseResponse<UserSaveResponse> register(@RequestBody @Valid final UserSaveRequest userSaveRequest) {
         return BaseResponse.ok(userService.saveUser(userSaveRequest));
+    }
+
+    @PostMapping("/name")
+    public BaseResponse<VerificationResponse> check(@RequestBody @Valid final UserSaveRequest userSaveRequest) {
+        return BaseResponse.ok(userService.checkName(userSaveRequest));
     }
 
     @PostMapping("/login")
