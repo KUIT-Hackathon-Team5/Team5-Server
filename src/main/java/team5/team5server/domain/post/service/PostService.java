@@ -93,6 +93,7 @@ public class PostService {
 
         if (order == 0) {
             sortMethod = "createdAt";
+            sortDirection = Sort.Direction.DESC;
         } else if (order == 1) {
             sortMethod = "viewCount";
             sortDirection = Sort.Direction.DESC;
