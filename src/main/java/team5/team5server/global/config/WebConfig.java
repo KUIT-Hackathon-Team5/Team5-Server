@@ -12,13 +12,13 @@ import team5.team5server.global.interceptor.AuthInterceptor;
 public class WebConfig implements WebMvcConfigurer {
     private final AuthInterceptor authInterceptor;
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/comments/**")
-//                .addPathPatterns("/users/emails/verifications")
-                .addPathPatterns("/posts/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(authInterceptor)
+//                .addPathPatterns("/comments/**")
+////                .addPathPatterns("/users/emails/verifications")
+//                .addPathPatterns("/posts/**");
+//    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
