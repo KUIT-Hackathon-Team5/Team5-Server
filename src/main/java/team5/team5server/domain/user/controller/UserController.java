@@ -60,4 +60,9 @@ public class UserController {
     public BaseResponse<UserLoginResponse> login(@RequestBody @Valid final UserLoginRequest userLoginRequest) {
         return BaseResponse.ok(userService.login(userLoginRequest));
     }
+
+    @GetMapping("/health")
+    public BaseResponse<String> health() {
+        return BaseResponse.ok("hello");
+    }
 }

@@ -1,12 +1,17 @@
 package team5.team5server.domain.comment.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import team5.team5server.domain.post.domain.Post;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.global.entity.BaseEntity;
 import team5.team5server.global.entity.EntityStatus;
 
 @Entity
+@Getter
+@NoArgsConstructor
+@Table(name = "comments")
 public class Comment extends BaseEntity {
 
     @Id
