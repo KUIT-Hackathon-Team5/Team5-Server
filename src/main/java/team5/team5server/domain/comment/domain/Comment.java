@@ -30,9 +30,6 @@ public class Comment extends BaseEntity {
     @Column(nullable = false)
     private String contents;
 
-    @Column(name = "like_count", nullable = false)
-    private int likeCount;
-
     @Column(nullable = false)
     private int reportCount;
 
@@ -45,7 +42,6 @@ public class Comment extends BaseEntity {
         this.user = user;
         this.post = post;
         this.contents = contents;
-        this.likeCount = 0;
         this.reportCount = 0;
         this.entityStatus = EntityStatus.ACTIVE;
     }

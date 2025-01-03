@@ -27,14 +27,12 @@ public class PostInfo {
 
     private LocalDateTime endTime;
 
-    private int likeCount;
-
     private int reportCount;
 
     private LocalDateTime createdDate;
 
     @Builder
-    public PostInfo(Long postId, Long userId, String title, String contents, String place, String type, LocalDateTime startTime, LocalDateTime endTime, int likeCount, int reportCount, LocalDateTime createdDate) {
+    public PostInfo(Long postId, Long userId, String title, String contents, String place, String type, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -43,7 +41,6 @@ public class PostInfo {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.likeCount = likeCount;
         this.reportCount = reportCount;
         this.createdDate = createdDate;
     }

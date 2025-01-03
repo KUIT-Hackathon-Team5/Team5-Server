@@ -34,14 +34,12 @@ public class PostInfoResponse {
 
     private LocalDateTime endTime;
 
-    private int likeCount;
-
     private int reportCount;
 
     private LocalDateTime createdDate;
 
     @Builder
-    public PostInfoResponse(Long postId, Long userId, String title, String contents, String organizer, String organizer_link, String type, String place, String category, LocalDateTime startTime, LocalDateTime endTime, int likeCount, int reportCount, LocalDateTime createdDate) {
+    public PostInfoResponse(Long postId, Long userId, String title, String contents, String organizer, String organizer_link, String type, String place, String category, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -53,7 +51,6 @@ public class PostInfoResponse {
         this.category = category;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.likeCount = likeCount;
         this.reportCount = reportCount;
         this.createdDate = createdDate;
     }
@@ -71,7 +68,6 @@ public class PostInfoResponse {
                 .category(post.getPostCategory().getCategory())
                 .startTime(post.getStartTime())
                 .endTime(post.getEndTime())
-                .likeCount(post.getLikeCount())
                 .reportCount(post.getReportCount())
                 .createdDate(post.getCreatedAt())
                 .build();

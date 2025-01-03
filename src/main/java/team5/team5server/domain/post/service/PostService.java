@@ -39,6 +39,7 @@ public class PostService {
 
         PostCategory postCategory = PostCategory.from(postSaveRequest.getCategory());
         PostType postType = PostType.from(postSaveRequest.getType());
+        log.info("Saving Category: {}", postCategory);
 
         Post newPost = Post.builder()
                 .user(writer)
@@ -52,7 +53,7 @@ public class PostService {
                 .startTime(postSaveRequest.getStartTime())
                 .endTime(postSaveRequest.getEndTime())
                 .build();
-
+        log.info("Saved Category: {}", postCategory);
         Post savePost = postRepository.save(newPost);
         return PostSaveResponse.of(savePost);
     }
@@ -60,23 +61,36 @@ public class PostService {
 
     public PostListResponse viewPost(String category, int order) {
 
+        List<PostInfo> posts = getPostInfoList(category, order);
+
+        return PostListResponse.of(posts);
+    }
+
+    private List<PostInfo> getPostInfoList(String category, int order) {
         PostCategory postCategory = PostCategory.from(category);
         String sortMethod;
+        Sort.Direction sortDirection = Sort.Direction.ASC;
 
         if (order == 0) {
             sortMethod = "createdAt";
         } else if (order == 1) {
             sortMethod = "viewCount";
+            sortDirection = Sort.Direction.DESC;
         } else if (order == 2) {
             sortMethod = "startTime";
         } else {
             throw new CustomException(ErrorCode.NO_SUCH_ORDER);
         }
 
-        List<Post> findPosts = postRepository.findByPostCategory(postCategory, Sort.by(Sort.Direction.ASC, sortMethod));
+        List<Post> findPosts = postRepository.findByPostCategory(postCategory, Sort.by(sortDirection, sortMethod));
         if (findPosts.isEmpty()) {
             throw new CustomException(ErrorCode.NO_SUCH_POST);
         }
+        List<PostInfo> posts = getPostInfo(findPosts);
+        return posts;
+    }
+
+    private static List<PostInfo> getPostInfo(List<Post> findPosts) {
         List<PostInfo> posts = new ArrayList<>();
 
         for (Post post : findPosts) {
@@ -89,14 +103,24 @@ public class PostService {
                     .place(post.getPlace())
                     .startTime(post.getStartTime())
                     .endTime(post.getEndTime())
-                    .likeCount(post.getLikeCount())
                     .reportCount(post.getReportCount())
                     .createdDate(post.getCreatedAt())
                     .build();
             posts.add(postInfo);
         }
+        return posts;
+    }
 
-        return PostListResponse.of(posts);
+    public PostListResponse viewPostAll(String category, int order) {
+        List<PostInfo> posts = getPostInfoList(category, order);
+
+        PostCategory postCategory = PostCategory.from(category);
+
+        List<Post> findPosts = postRepository.findTop3ByPostCategoryOrderByViewCountDesc(postCategory);
+        List<PostInfo> popularPosts = getPostInfo(findPosts);
+
+
+        return PostListResponse.of(posts, popularPosts);
     }
 
     public PostInfoResponse viewPostInfo(Long postId) {
@@ -110,4 +134,6 @@ public class PostService {
 
         return PostInfoResponse.of(findPost);
     }
+
+
 }

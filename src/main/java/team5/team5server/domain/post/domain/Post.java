@@ -45,14 +45,11 @@ public class Post extends BaseEntity {
     @Column(name = "post_category", nullable = false)
     private PostCategory postCategory; //단과대, 동아리
 
-    @Column(length = 200)
+    @Column(length = 200, nullable = false)
     private String organizer;
 
     @Column(name = "organizer_link", length = 255)
     private String organizerLink;
-
-    @Column(name = "count_of_comment", nullable = false)
-    private int countOfComment;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime; //2007-12-03T10:15:30 형식
@@ -62,9 +59,6 @@ public class Post extends BaseEntity {
 
     @Column(name = "view_count", nullable = false)
     private int viewCount;
-
-    @Column(name = "like_count", nullable = false)
-    private int likeCount;
 
     @Column(name = "report_count", nullable = false)
     private int reportCount;
@@ -85,9 +79,7 @@ public class Post extends BaseEntity {
         this.organizerLink = organizerLink;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.countOfComment = 0;
         this.viewCount = 0;
-        this.likeCount = 0;
         this.reportCount = 0;
         this.entityStatus = EntityStatus.ACTIVE;
     }

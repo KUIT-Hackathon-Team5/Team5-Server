@@ -28,7 +28,7 @@ public class PostController {
     }
 
     /**
-     * 게시글 목록 조회
+     * 게시글 목록 정렬
      * @param category
      * @param order
      * @return
@@ -39,6 +39,14 @@ public class PostController {
             @RequestParam("order") final int order) {
 
         return BaseResponse.ok(postService.viewPost(category, order));
+    }
+
+    @GetMapping("/view")
+    public BaseResponse<PostListResponse> viewAll(
+            @RequestParam("category") final String category,
+            @RequestParam("order") final int order) {
+
+        return BaseResponse.ok(postService.viewPostAll(category, order));
     }
 
     /**
