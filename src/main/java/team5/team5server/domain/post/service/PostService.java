@@ -12,11 +12,9 @@ import team5.team5server.domain.post.domain.Post;
 import team5.team5server.domain.post.domain.PostCategory;
 import team5.team5server.domain.post.domain.PostType;
 import team5.team5server.domain.post.domain.repository.PostRepository;
+import team5.team5server.domain.post.dto.request.PostEditRequest;
 import team5.team5server.domain.post.dto.request.PostSaveRequest;
-import team5.team5server.domain.post.dto.response.PostInfo;
-import team5.team5server.domain.post.dto.response.PostInfoResponse;
-import team5.team5server.domain.post.dto.response.PostListResponse;
-import team5.team5server.domain.post.dto.response.PostSaveResponse;
+import team5.team5server.domain.post.dto.response.*;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.domain.user.domain.repository.UserRepository;
 import team5.team5server.global.response.exception.CustomException;
@@ -169,4 +167,19 @@ public class PostService {
     }
 
 
+    public PostEditResponse editPost(Long postId, PostEditRequest postEditRequest) {
+        Post findPost = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_POST));
+
+        findPost.setTitle(postEditRequest.getTitle());
+        findPost.setContents(postEditRequest.getContents());
+        findPost.setOrganizer(postEditRequest.getOrganizer());
+        findPost.setPlace(postEditRequest.getPlace());
+        findPost.setStartTime(postEditRequest.getStartTime());
+        findPost.setEndTime(postEditRequest.getEndTime());
+
+        postRepository.save(findPost);
+
+        return PostEditResponse.of(findPost);
+    }
 }

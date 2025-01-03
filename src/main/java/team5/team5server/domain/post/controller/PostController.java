@@ -82,30 +82,8 @@ public class PostController {
     public BaseResponse<PostEditResponse> edit(
             @PathVariable Long postId, @RequestBody PostEditRequest postEditRequest
     ) {
-        return null;
+        return BaseResponse.ok(postService.editPost(postId, postEditRequest));
     }
 
-    /**
-     * 게시글 삭제
-     * @param postId
-     * @return
-     */
-    @DeleteMapping("{postId}")
-    public BaseResponse<Void> delete(
-            @PathVariable Long postId
-    ) {
-        return null;
-    }
 
-    /**
-     * 게시글 신고
-     * @param postId
-     * @return
-     */
-    @PostMapping("/{postId}/report")
-    public BaseResponse<PostReportResponse> report(
-            @PathVariable Long postId
-    ) {
-        return null;
-    }
 }

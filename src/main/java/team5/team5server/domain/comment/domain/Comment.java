@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import team5.team5server.domain.post.domain.Post;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.global.entity.BaseEntity;
@@ -11,6 +12,7 @@ import team5.team5server.global.entity.EntityStatus;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "comments")
 public class Comment extends BaseEntity {

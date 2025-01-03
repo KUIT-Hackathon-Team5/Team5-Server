@@ -31,20 +31,7 @@ public class CommentController {
     public BaseResponse<CommentEditResponse> edit(
             @PathVariable Long commentId, @RequestBody CommentEditRequest commentEditRequest
     ) {
-        return null;
+        return BaseResponse.ok(commentService.editComment(commentId, commentEditRequest));
     }
 
-    @DeleteMapping("{commentId}")
-    public BaseResponse<CommentDeleteResponse> delete(
-            @PathVariable Long commentId
-    ) {
-        return null;
-    }
-
-    @PostMapping("{commentId}/report")
-    public BaseResponse<CommentReportResponse> report(
-            @PathVariable Long commentId
-    ) {
-        return null;
-    }
 }

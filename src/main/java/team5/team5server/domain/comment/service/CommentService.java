@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team5.team5server.domain.comment.domain.Comment;
 import team5.team5server.domain.comment.domain.repository.CommentRepository;
+import team5.team5server.domain.comment.dto.request.CommentEditRequest;
 import team5.team5server.domain.comment.dto.request.CommentSaveRequest;
+import team5.team5server.domain.comment.dto.response.CommentEditResponse;
 import team5.team5server.domain.comment.dto.response.CommentInfo;
 import team5.team5server.domain.comment.dto.response.CommentListResponse;
 import team5.team5server.domain.comment.dto.response.CommentSaveResponse;
@@ -75,5 +77,17 @@ public class CommentService {
         }
 
         return CommentListResponse.of(comments);
+    }
+
+    public CommentEditResponse editComment(Long commentId, CommentEditRequest commentEditRequest) {
+
+        Comment findComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_SUCH_COMMENT));
+
+        findComment.setContents(commentEditRequest.getContents());
+
+        commentRepository.save(findComment);
+
+        return CommentEditResponse.of(findComment);
     }
 }
