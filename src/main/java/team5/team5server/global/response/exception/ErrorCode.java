@@ -12,9 +12,11 @@ public enum ErrorCode {
 
 
     INTERNAL_SERVER_ERROR(500, "Internal server error"),
-//    NO_SUCH_USER(500, "No such user"),
+    NO_SUCH_USER(500, "알맞은 사용자를 찾을 수 없습니다."),
     EMAIL_SEND_EXCEPTION(500, "메일을 전송하는데 실패하였습니다."),
-    NO_SUCH_ALGORITHM(500, "메일 인증 코드 생성시 오류가 발생했습니다.");
+    NO_SUCH_ALGORITHM(500, "메일 인증 코드 생성시 오류가 발생했습니다."),
+    NO_SUCH_CATEGORY(500, "올바른 카테고리를 찾을 수 없습니다"),
+    NO_SUCH_TYPE(500, "올바른 분야를 찾을 수 없습니다.");
 
     private final int status;
     private final String message;
