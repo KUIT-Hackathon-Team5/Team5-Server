@@ -30,17 +30,15 @@ public class PostController {
     /**
      * 게시글 목록 조회
      * @param category
-     * @param type
      * @param order
      * @return
      */
     @GetMapping
     public BaseResponse<PostListResponse> view(
             @RequestParam("category") final String category,
-            @RequestParam("type") final String type,
             @RequestParam("order") final int order) {
 
-        return null;
+        return BaseResponse.ok(postService.viewPost(category, order));
     }
 
     /**
@@ -48,11 +46,11 @@ public class PostController {
      * @param postId
      * @return
      */
-    @GetMapping("{postId}")
+    @GetMapping("/{postId}")
     public BaseResponse<PostInfoResponse> viewInfo(
             @PathVariable Long postId
     ) {
-        return null;
+        return BaseResponse.ok(postService.viewPostInfo(postId));
     }
 
     /**
@@ -61,7 +59,7 @@ public class PostController {
      * @param postEditRequest
      * @return
      */
-    @PatchMapping("{postId}")
+    @PatchMapping("/{postId}")
     public BaseResponse<PostEditResponse> edit(
             @PathVariable Long postId, @RequestBody PostEditRequest postEditRequest
     ) {
@@ -85,7 +83,7 @@ public class PostController {
      * @param postId
      * @return
      */
-    @PostMapping("{postId}/report")
+    @PostMapping("/{postId}/report")
     public BaseResponse<PostReportResponse> report(
             @PathVariable Long postId
     ) {

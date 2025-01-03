@@ -88,6 +88,9 @@ public class UserService {
     @Transactional
     public UserSaveResponse saveUser(@Valid final UserSaveRequest userSaveRequest) {
         this.checkDuplicatedEmail(userSaveRequest.getEmail());
+
+        checkDuplicateName(userSaveRequest);
+
         User user = User.builder()
                 .email(userSaveRequest.getEmail())
                 .password(userSaveRequest.getPassword())
@@ -96,6 +99,14 @@ public class UserService {
         userRepository.save(user);
         return UserSaveResponse.of(user);
     }
+
+    private void checkDuplicateName(UserSaveRequest userSaveRequest) {
+        if (userRepository.existsByName(userSaveRequest.getName())) {
+            log.debug("MemberServiceImpl.checkDuplicateName exception occur name: {}", userSaveRequest.getName());
+            throw new CustomException(ErrorCode.DUPLICATE_NAME);
+        }
+    }
+
 
     public UserLoginResponse login(@Valid UserLoginRequest userLoginRequest) {
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.global.entity.BaseEntity;
 import team5.team5server.global.entity.EntityStatus;
@@ -11,6 +12,7 @@ import team5.team5server.global.entity.EntityStatus;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "posts")
@@ -40,8 +42,8 @@ public class Post extends BaseEntity {
     private PostType postType; //스포츠, 예술 등등
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 50)
-    private PostCategory category; //단과대, 동아리
+    @Column(name = "post_category", nullable = false)
+    private PostCategory postCategory; //단과대, 동아리
 
     @Column(length = 200)
     private String organizer;
@@ -72,13 +74,13 @@ public class Post extends BaseEntity {
     private EntityStatus entityStatus;
 
     @Builder
-    public Post(User user, String title, String contents, String place, PostType postType, PostCategory category, String organizer, String organizerLink, LocalDateTime startTime, LocalDateTime endTime) {
+    public Post(User user, String title, String contents, String place, PostType postType, PostCategory postCategory, String organizer, String organizerLink, LocalDateTime startTime, LocalDateTime endTime) {
         this.user = user;
         this.title = title;
         this.contents = contents;
         this.place = place;
         this.postType = postType;
-        this.category = category;
+        this.postCategory = postCategory;
         this.organizer = organizer;
         this.organizerLink = organizerLink;
         this.startTime = startTime;

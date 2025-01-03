@@ -5,8 +5,8 @@ import team5.team5server.global.response.exception.CustomException;
 import team5.team5server.global.response.exception.ErrorCode;
 
 @Getter
-public enum PostType {
-    SPORTS("스포츠"), ARTS("예술"), GENERAL("일반");
+public enum PostType { //부원모집, 이벤트, 정기행사, 공연 및 전시, 홍보
+    RECRUIT("부원모집"), EVENT("이벤트"), GENERAL("정기행사"), DISPLAY("공연 및 전시"), ADVERTISE("홍보");
 
     private String type;
 
