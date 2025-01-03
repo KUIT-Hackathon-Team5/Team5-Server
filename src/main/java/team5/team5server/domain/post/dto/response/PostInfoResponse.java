@@ -7,6 +7,7 @@ import team5.team5server.domain.post.domain.Post;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -38,8 +39,10 @@ public class PostInfoResponse {
 
     private LocalDateTime createdDate;
 
+    private List<String> imageUrls;
+
     @Builder
-    public PostInfoResponse(Long postId, Long userId, String title, String contents, String organizer, String organizer_link, String type, String place, String category, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate) {
+    public PostInfoResponse(Long postId, Long userId, String title, String contents, String organizer, String organizer_link, String type, String place, String category, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate, List<String> imageUrls) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -53,9 +56,10 @@ public class PostInfoResponse {
         this.endTime = endTime;
         this.reportCount = reportCount;
         this.createdDate = createdDate;
+        this.imageUrls = imageUrls;
     }
 
-    public static PostInfoResponse of(Post post) {
+    public static PostInfoResponse of(Post post, List<String> imageUrls) {
         return PostInfoResponse.builder()
                 .postId(post.getId())
                 .userId(post.getUser().getId())
@@ -70,6 +74,7 @@ public class PostInfoResponse {
                 .endTime(post.getEndTime())
                 .reportCount(post.getReportCount())
                 .createdDate(post.getCreatedAt())
+                .imageUrls(imageUrls)
                 .build();
     }
 }

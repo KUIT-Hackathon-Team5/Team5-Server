@@ -40,7 +40,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
-
   data:
     redis:
       host: localhost
@@ -55,6 +54,11 @@ logging:
   level:
     root: DEBUG
     org.springframework.mail: DEBUG
+
+file:
+  upload-path: /home/ec2-user/Team5-Server/uploads
+
+
 
 jwt:
   secret: hackathonteam5kuzonehackathonteam5kuzonehackathonteam5kuzone
@@ -105,3 +109,6 @@ server:
 jwt:
   secret: hackathonteam5kuzonehackathonteam5kuzonehackathonteam5kuzone
   expiration: 10800000
+
+file:
+  upload-path: /home/ec2-user/Team5-Server/uploads

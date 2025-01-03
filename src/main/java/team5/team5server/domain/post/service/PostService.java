@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team5.team5server.domain.image.domain.Image;
+import team5.team5server.domain.image.domain.repository.ImageRepository;
+import team5.team5server.domain.image.service.FileStore;
 import team5.team5server.domain.post.domain.Post;
 import team5.team5server.domain.post.domain.PostCategory;
 import team5.team5server.domain.post.domain.PostType;
@@ -30,8 +33,12 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
+    private final FileStore fileStore;
 
-    public PostSaveResponse uploadPost(PostSaveRequest postSaveRequest) {
+    public PostSaveResponse uploadPost(PostSaveRequest postSaveRequest, List<String> fileKeys) {
+        //파일 경로 찾기
+        List<Image> images = new ArrayList<>();
 
         Long userId = postSaveRequest.getUserId();
         User writer = userRepository.findById(userId)
@@ -53,8 +60,21 @@ public class PostService {
                 .startTime(postSaveRequest.getStartTime())
                 .endTime(postSaveRequest.getEndTime())
                 .build();
+
+        if (fileKeys != null && !fileKeys.isEmpty()) {
+            for (String key : fileKeys) {
+                images.add(Image.builder()
+                        .filePath(fileStore.getFullPath(key))
+                        .post(newPost)
+                        .build());
+            }
+
+        }
+        newPost.getImages().addAll(images);
+
         log.info("Saved Category: {}", postCategory);
         Post savePost = postRepository.save(newPost);
+        imageRepository.saveAll(images);
         return PostSaveResponse.of(savePost);
     }
 
@@ -90,10 +110,17 @@ public class PostService {
         return posts;
     }
 
-    private static List<PostInfo> getPostInfo(List<Post> findPosts) {
+    private List<PostInfo> getPostInfo(List<Post> findPosts) {
         List<PostInfo> posts = new ArrayList<>();
 
         for (Post post : findPosts) {
+
+            List<String> imageUrls = new ArrayList<>();
+            for (Image image : post.getImages()) {
+                log.info("Post id: {}, Post imagesURl: {}", post.getId(), image.getFilePath());
+                imageUrls.add(fileStore.getPublicUrl(image.getFilePath()));
+            }
+
             PostInfo postInfo = PostInfo.builder()
                     .postId(post.getId())
                     .userId(post.getUser().getId())
@@ -105,13 +132,14 @@ public class PostService {
                     .endTime(post.getEndTime())
                     .reportCount(post.getReportCount())
                     .createdDate(post.getCreatedAt())
+                    .imageUrls(imageUrls)
                     .build();
             posts.add(postInfo);
         }
         return posts;
     }
 
-    public PostListResponse viewPostAll(String category, int order) {
+    public PostListResponse viewPostAll(String category, int order) { //정렬된 post list와 인기있는 post 3개 반환
         List<PostInfo> posts = getPostInfoList(category, order);
 
         PostCategory postCategory = PostCategory.from(category);
@@ -132,7 +160,11 @@ public class PostService {
 
         postRepository.save(findPost);
 
-        return PostInfoResponse.of(findPost);
+        List<String> imageUrls = findPost.getImages().stream()
+                .map(image -> fileStore.getPublicUrl(image.getFilePath()))
+                .toList();
+
+        return PostInfoResponse.of(findPost, imageUrls);
     }
 
 

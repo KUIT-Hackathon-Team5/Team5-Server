@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -31,8 +32,10 @@ public class PostInfo {
 
     private LocalDateTime createdDate;
 
+    private List<String> imageUrls;
+
     @Builder
-    public PostInfo(Long postId, Long userId, String title, String contents, String place, String type, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate) {
+    public PostInfo(Long postId, Long userId, String title, String contents, String place, String type, LocalDateTime startTime, LocalDateTime endTime, int reportCount, LocalDateTime createdDate, List<String> imageUrls) {
         this.postId = postId;
         this.userId = userId;
         this.title = title;
@@ -43,5 +46,6 @@ public class PostInfo {
         this.endTime = endTime;
         this.reportCount = reportCount;
         this.createdDate = createdDate;
+        this.imageUrls = imageUrls;
     }
 }

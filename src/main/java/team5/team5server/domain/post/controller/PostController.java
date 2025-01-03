@@ -26,8 +26,10 @@ public class PostController {
      * @return
      */
     @PostMapping
-    public BaseResponse<PostSaveResponse> post(@RequestBody final PostSaveRequest postSaveRequest) {
-        return BaseResponse.ok(postService.uploadPost(postSaveRequest));
+    public BaseResponse<PostSaveResponse> post(@RequestBody final PostSaveRequest postSaveRequest,
+                                               @RequestParam(value = "fileKeys",  required = false) List<String> fileKeys
+                                               ) {
+        return BaseResponse.ok(postService.uploadPost(postSaveRequest, fileKeys));
     }
 
     /**
@@ -44,6 +46,12 @@ public class PostController {
         return BaseResponse.ok(postService.viewPost(category, order));
     }
 
+    /**
+     * 게시글 목록 전체 조회
+     * @param category
+     * @param order
+     * @return
+     */
     @GetMapping("/view")
     public BaseResponse<PostListResponse> viewAll(
             @RequestParam("category") final String category,

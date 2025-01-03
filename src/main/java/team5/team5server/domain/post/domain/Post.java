@@ -5,11 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import team5.team5server.domain.image.domain.Image;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.global.entity.BaseEntity;
 import team5.team5server.global.entity.EntityStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,6 +30,8 @@ public class Post extends BaseEntity {
     private User user;
 
     //todo Image 추가하기
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Image> images = new ArrayList<>();
 
     @Column(nullable = false, length = 500)
     private String title;
