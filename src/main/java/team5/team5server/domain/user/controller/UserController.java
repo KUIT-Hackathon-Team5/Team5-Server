@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import team5.team5server.domain.user.dto.request.CheckNameRequest;
 import team5.team5server.domain.user.dto.request.EmailSendRequest;
 import team5.team5server.domain.user.dto.request.UserLoginRequest;
 import team5.team5server.domain.user.dto.request.UserSaveRequest;
@@ -57,8 +58,8 @@ public class UserController {
     }
 
     @PostMapping("/name")
-    public BaseResponse<VerificationResponse> check(@RequestBody @Valid final UserSaveRequest userSaveRequest) {
-        return BaseResponse.ok(userService.checkName(userSaveRequest));
+    public BaseResponse<VerificationResponse> check(@RequestBody @Valid final CheckNameRequest checkNameRequest) {
+        return BaseResponse.ok(userService.checkName(checkNameRequest));
     }
 
     @PostMapping("/login")

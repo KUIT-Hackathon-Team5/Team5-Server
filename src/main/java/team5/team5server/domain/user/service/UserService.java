@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team5.team5server.domain.user.domain.User;
 import team5.team5server.domain.user.domain.repository.UserRepository;
+import team5.team5server.domain.user.dto.request.CheckNameRequest;
 import team5.team5server.domain.user.dto.request.EmailSendRequest;
 import team5.team5server.domain.user.dto.request.UserLoginRequest;
 import team5.team5server.domain.user.dto.request.UserSaveRequest;
@@ -130,8 +131,8 @@ public class UserService {
         return UserLoginResponse.of(token, user.getId());
     }
 
-    public VerificationResponse checkName(@Valid UserSaveRequest userSaveRequest) {
-        this.checkDuplicateName(userSaveRequest.getName());
+    public VerificationResponse checkName(@Valid CheckNameRequest checkNameRequest) {
+        this.checkDuplicateName(checkNameRequest.getName());
         return VerificationResponse.of(true);
     }
 }
