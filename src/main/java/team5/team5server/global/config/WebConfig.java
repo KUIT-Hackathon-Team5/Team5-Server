@@ -22,12 +22,12 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173", "http://localhost:5174") // 허용할 출처
-                .allowedMethods("GET", "POST","PATCH","DELETE","OPTIONS") // 허용할 HTTP method
-                .allowedHeaders("*")
-                .allowCredentials(true) // 쿠키 인증 요청 허용
-                .maxAge(3600); // 원하는 시간만큼 pre-flight 리퀘스트를 캐싱
+        registry.addMapping("/**") // 모든 엔드포인트에 대해 CORS 설정
+                .allowedOrigins("http://localhost:5173") // 허용할 클라이언트 Origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // 허용할 HTTP 메서드
+                .allowedHeaders("authorization", "content-type") // 허용할 요청 헤더
+                .allowCredentials(true) // 인증 정보를 포함한 요청 허용
+                .maxAge(3600); // Preflight 요청 캐싱 시간 (초)
     }
 
 
