@@ -1,6 +1,7 @@
 package team5.team5server.domain.post.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team5.team5server.domain.user.domain.User;
@@ -69,4 +70,24 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private EntityStatus entityStatus;
+
+    @Builder
+    public Post(User user, String title, String contents, String place, PostType postType, PostCategory category, String organizer, String organizerLink, LocalDateTime startTime, LocalDateTime endTime) {
+        this.user = user;
+        this.title = title;
+        this.contents = contents;
+        this.place = place;
+        this.postType = postType;
+        this.category = category;
+        this.organizer = organizer;
+        this.organizerLink = organizerLink;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.countOfComment = 0;
+        this.viewCount = 0;
+        this.likeCount = 0;
+        this.reportCount = 0;
+        this.entityStatus = EntityStatus.ACTIVE;
+    }
+
 }

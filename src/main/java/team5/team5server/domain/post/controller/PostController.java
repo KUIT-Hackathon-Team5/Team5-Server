@@ -24,8 +24,7 @@ public class PostController {
      */
     @PostMapping
     public BaseResponse<PostSaveResponse> post(@RequestBody final PostSaveRequest postSaveRequest) {
-
-        return null;
+        return BaseResponse.ok(postService.uploadPost(postSaveRequest));
     }
 
     /**

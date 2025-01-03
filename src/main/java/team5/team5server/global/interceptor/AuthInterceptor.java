@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             String token = authHeader.substring(7);
             Claims claims = jwtUtil.validateAccessToken(token);
             request.setAttribute("email", claims.getSubject());
-            log.info("사용자 {} 인증", request.getAttribute("username"));
+            log.info("사용자 {} 인증", request.getAttribute("email"));
             return true;
         }
         throw new CustomException(ErrorCode.MISSING_AUTH_HEADER);

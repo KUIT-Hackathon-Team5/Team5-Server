@@ -110,6 +110,6 @@ public class UserService {
         String token = jwtUtil.generateAccessToken(user.getEmail());
         log.debug("generating access token: {}", token);
 
-        return UserLoginResponse.of(token);
+        return UserLoginResponse.of(token, user.getId());
     }
 }
